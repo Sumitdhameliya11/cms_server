@@ -12,7 +12,7 @@
             while($row = $result->fetch_assoc()){
                 $admindata[] = $row;
             }
-            echo json_encode(["admin data" => $admindata]);
+            echo json_encode(["admin_data" => $admindata]);
         }else{
             echo json_encode(['message'=> 'No Admin Data Found']);
         }

@@ -2,26 +2,17 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json");
-
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
 include ("../config/config.php");
 $data = json_decode(file_get_contents("php://input"), true);
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     // Get the admin ID and new data from the request
     $complaintId = (int)($data['id']);
-    $userId = (int)($data['userid']);
-    $email = $conn->real_escape_string($data['email']);
-    $mobilenumber = $conn->real_escape_string($data['mobilenumber']);
-    $sutno = $conn->real_escape_string($data['sutno']);
-    $category = $conn->real_escape_string($data['category']);
-    $subcategory = $conn->real_escape_string($data['subcategory']);
-    $priority = $conn->real_escape_string($data['priority']);
-    $problem_description = $conn->real_escape_string($data['problem_description']);
-    $create_date = date('Y-m-d'); // Current date in YYYY-MM-DD format
+    $userId = (int)($data['user_id']);
     $computer_ip = $conn->real_escape_string($_SERVER['REMOTE_ADDR']);
     $role = $conn->real_escape_string($data['role']);
     $resolve_date = date('Y-m-d');
-    $resolver_name;
     $status=$conn->real_escape_string($data['status']);
     $resolve_ip = $conn->real_escape_string($_SERVER['REMOTE_ADDR']);
 
@@ -37,13 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             }else{
                 echo json_encode(["message"=> "Update Complaint Error"]);
             }
-        }
-    }else{
-        $sql = "update complaint set email = '$email',Mobile_number = '$mobilenumber',category = '$category',subcategory = '$subcategory',problem = '$problem_description',sutno ='$sutno',computer_ip = '$computer_ip',priority = '$priority' where id = $complaintId and isdelete = 'FALSE'";
-        if($conn->query($sql)=== TRUE) {
-            echo json_encode(["message"=> "Save The Change"]);
-        }else{
-            echo json_encode(["message"=> "Update Complaint Error"]);
         }
     }
 }

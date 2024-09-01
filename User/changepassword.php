@@ -2,11 +2,12 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
 
 include ("../config/config.php");
 $data = json_decode(file_get_contents("php://input"), true);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     // Get the data from the request
     $userId = (int)$data['id']; // Cast ID to integer
     $currentPassword = $data['oldpassword'];
